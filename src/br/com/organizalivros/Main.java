@@ -1,17 +1,11 @@
 package br.com.organizalivros;
 
 
-import br.com.organizalivros.db.Database;
-
-import java.sql.Connection;
+import br.com.organizalivros.view.LivroView;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Bem-vindo à Biblioteca Pessoal!");
-
-        Connection conn = Database.connect();
-        if (conn != null) {
-            System.out.println("Conexão com PostgreSQL realizada com sucesso!");
-        }
+        LivroView livroView = new LivroView();
+        livroView.menu();
     }
 }
