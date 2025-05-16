@@ -15,6 +15,13 @@ public class Livro {
     private Double preco;
     private String capa;
 
+
+    private String statusLeitura; // "Não lido", "Lendo", etc.
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
+    private Integer nota;
+    private String anotacoes;
+
     // Construtores
     public Livro() {}
 
@@ -120,4 +127,19 @@ public class Livro {
     public void setCapa(String capa) {
         this.capa = capa;
     }
+
+    public String getStatusLeitura() { return statusLeitura; }
+    public void setStatusLeitura(String statusLeitura) { this.statusLeitura = statusLeitura; }
+
+    public LocalDate getDataInicio() { return dataInicio; }
+    public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }
+
+    public LocalDate getDataFim() { return dataFim; }
+    public void setDataFim(LocalDate dataFim) { this.dataFim = dataFim; }
+
+    public Integer getNota() { return nota; }
+    public void setNota(Integer nota) { this.nota = nota; }
+
+    public String getAnotacoes() { return anotacoes; }
+    public void setAnotacoes(String anotacoes) { this.anotacoes = anotacoes; }
 }
