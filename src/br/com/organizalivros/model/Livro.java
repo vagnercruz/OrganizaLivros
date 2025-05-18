@@ -22,6 +22,7 @@ public class Livro {
     private Integer nota;
     private String anotacoes;
 
+
     // Construtores
     public Livro() {}
 
@@ -142,4 +143,15 @@ public class Livro {
 
     public String getAnotacoes() { return anotacoes; }
     public void setAnotacoes(String anotacoes) { this.anotacoes = anotacoes; }
+
+    private List<Genero> generos = new ArrayList<>();
+
+    public List<Genero> getGeneros() {
+        return generos;
+    }
+
+    public void setGeneros(List<Genero> generos) {
+        this.generos = generos;
+    }
+
 }

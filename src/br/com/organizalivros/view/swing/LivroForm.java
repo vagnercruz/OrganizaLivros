@@ -11,7 +11,7 @@ public class LivroForm extends JFrame {
 
     private final JTextField tituloField = new JTextField(20);
     private final JTextField autorField = new JTextField(20);
-    private final JTextField generoField = new JTextField(20);
+    private final JList<String> generoList = new JList<>();
     private final JTextField isbnField = new JTextField(20);
     private final JTextField editoraField = new JTextField(20);
     private final JTextField anoField = new JTextField(4);
