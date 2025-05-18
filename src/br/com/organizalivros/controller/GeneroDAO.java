@@ -1,40 +1,56 @@
-package br.com.organizalivros.model;
+package br.com.organizalivros.controller;
 
-public class Genero {
-    private int id;
-    private String nome;
+import br.com.organizalivros.db.Database;
+import br.com.organizalivros.model.Genero;
 
-    // Construtores
-    public Genero() {}
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Genero(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
+public class GeneroDAO {
+
+    public Genero buscarOuCriar(String nome) {
+        String selectSql = "SELECT id FROM generos WHERE nome = ?";
+        String insertSql = "INSERT INTO generos (nome) VALUES (?) RETURNING id";
+
+        try (Connection conn = Database.connect()) {
+            try (PreparedStatement stmt = conn.prepareStatement(selectSql)) {
+                stmt.setString(1, nome);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new Genero(rs.getInt("id"), nome);
+                }
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+                stmt.setString(1, nome);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new Genero(rs.getInt("id"), nome);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public Genero(String nome) {
-        this.nome = nome;
-    }
+    public List<Genero> listarTodos() {
+        List<Genero> generos = new ArrayList<>();
+        String sql = "SELECT * FROM generos";
 
-    // Getters e setters
-    public int getId() {
-        return id;
-    }
+        try (Connection conn = Database.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-    public void setId(int id) {
-        this.id = id;
-    }
+            while (rs.next()) {
+                Genero genero = new Genero(rs.getInt("id"), rs.getString("nome"));
+                generos.add(genero);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    @Override
-    public String toString() {
-        return nome;
+        return generos;
     }
 }

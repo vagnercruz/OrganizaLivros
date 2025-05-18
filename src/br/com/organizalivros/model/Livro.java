@@ -1,6 +1,8 @@
 package br.com.organizalivros.model;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Livro {
     private int id;

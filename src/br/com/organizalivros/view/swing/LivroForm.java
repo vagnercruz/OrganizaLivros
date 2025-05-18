@@ -6,12 +6,15 @@ import br.com.organizalivros.model.Livro;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.List;
 
 public class LivroForm extends JFrame {
 
     private final JTextField tituloField = new JTextField(20);
     private final JTextField autorField = new JTextField(20);
-    private final JList<String> generoList = new JList<>();
+    private final JList<String> generoList = new JList<>(new String[] {
+            "Ficção", "Não-ficção", "Romance", "Suspense", "Terror", "Aventura", "Fantasia", "Biografia", "Autoajuda"
+    });
     private final JTextField isbnField = new JTextField(20);
     private final JTextField editoraField = new JTextField(20);
     private final JTextField anoField = new JTextField(4);
@@ -41,8 +44,8 @@ public class LivroForm extends JFrame {
         panel.add(tituloField);
         panel.add(new JLabel("Autor:"));
         panel.add(autorField);
-        panel.add(new JLabel("Gênero:"));
-        panel.add(generoField);
+        panel.add(new JLabel("Gênero(s):"));
+        panel.add(new JScrollPane(generoList));
         panel.add(new JLabel("ISBN:"));
         panel.add(isbnField);
         panel.add(new JLabel("Editora:"));
@@ -83,7 +86,11 @@ public class LivroForm extends JFrame {
             Livro livro = new Livro();
             livro.setTitulo(tituloField.getText());
             livro.setAutor(autorField.getText());
-            livro.setGenero(generoField.getText());
+
+            // Concatenar os gêneros selecionados
+            List<String> generosSelecionados = generoList.getSelectedValuesList();
+            livro.setGenero(String.join(", ", generosSelecionados));
+
             livro.setIsbn(isbnField.getText());
             livro.setEditora(editoraField.getText());
             livro.setAno(Integer.parseInt(anoField.getText()));
@@ -109,7 +116,7 @@ public class LivroForm extends JFrame {
     private void limparCampos() {
         tituloField.setText("");
         autorField.setText("");
-        generoField.setText("");
+        generoList.clearSelection();
         isbnField.setText("");
         editoraField.setText("");
         anoField.setText("");
