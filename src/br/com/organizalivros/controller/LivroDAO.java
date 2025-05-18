@@ -157,4 +157,40 @@ public class LivroDAO {
 
         return livros;
     }
+
+    public Livro buscarPorId(int id) {
+        String sql = "SELECT * FROM livros WHERE id = ?";
+        try (Connection conn = Database.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Livro livro = new Livro();
+                livro.setId(rs.getInt("id"));
+                livro.setTitulo(rs.getString("titulo"));
+                livro.setAutor(rs.getString("autor"));
+                livro.setGenero(rs.getString("genero"));
+                livro.setIsbn(rs.getString("isbn"));
+                livro.setEditora(rs.getString("editora"));
+                livro.setAno(rs.getInt("ano"));
+                livro.setPaginas(rs.getInt("paginas"));
+                livro.setDataAquisicao(rs.getDate("data_aquisicao").toLocalDate());
+                livro.setPreco(rs.getDouble("preco"));
+                livro.setCapa(rs.getString("capa"));
+                livro.setStatusLeitura(rs.getString("status_leitura"));
+                livro.setDataInicio(rs.getDate("data_inicio") != null ? rs.getDate("data_inicio").toLocalDate() : null);
+                livro.setDataFim(rs.getDate("data_fim") != null ? rs.getDate("data_fim").toLocalDate() : null);
+                livro.setNota(rs.getObject("nota") != null ? rs.getInt("nota") : null);
+                livro.setAnotacoes(rs.getString("anotacoes"));
+
+                return livro;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

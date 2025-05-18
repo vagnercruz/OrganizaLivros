@@ -48,6 +48,23 @@ public class LivroListForm extends JFrame {
         carregarLivros();
 
         setVisible(true);
+
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    int row = tabela.getSelectedRow();
+                    if (row != -1) {
+                        int livroId = (int) modelo.getValueAt(row, 0);
+                        Livro livro = dao.buscarPorId(livroId);
+                        if (livro != null) {
+                            new LivroDetalhesDialog(LivroListForm.this, livro);
+                        } else {
+                            JOptionPane.showMessageDialog(LivroListForm.this, "Livro não encontrado.");
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void carregarLivros() {
